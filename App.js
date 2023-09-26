@@ -35,7 +35,7 @@ export default function App() { //exportando uma função padrão
 const styles = StyleSheet.create({
   container: { //criando uma classe e estilizando
     flex: 1,
-    backgroundColor: 'wheat',
+    backgroundColor: 'crimson',
     alignItems: 'center',
     justifyContent: 'center',
   },
