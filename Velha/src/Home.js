@@ -1,38 +1,66 @@
+import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 
-export default function Home({ mudarNomesJogadores }) {
+export default function Home(props) {
 
-    const { jogador1, setJogador1 } = useState("");
-    const { jogador2, setJogador2 } = useState("");
+const [player1, setPlayer1] = useState("");
+const [player2, setPlayer2] = useState("");
 
-    const handleClick = () => {
-        if (mudarNomesJogadores) {
-            mudarNomesJogadores(jogador1, jogador2)
-            changeScreen("jogo")
-        }
-    }
-    return (
-        <View style={styles.container}>
+const handClick = ()=>{
+    if(player1 === "" || player2 ===""){
+        alert("Erro, digite um nome válido");
+    }else{
+      alert(player1 +" x "+ player2);
+      props.mudarNomeJogadores(player1, player2);
+      props.changeScream('jogo')
+  }
+}
 
-            <TextInput placeholder='Jogador 1' value={jogador1} onChangeText={setJogador1} />
-            <Text> O nome do jogador 1 é: {jogador1}</Text>
-
-            <TextInput placeholder='Jogador 2' value={jogador2} onChangeText={setJogador2} />
-            <Text> O nome do jogador 2 é: {jogador2}</Text>
-
-            <Button title='Click' onPress={handleClick} />
-
-        </View>
-    );
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Bem vindo ao Jogo da Velha digite o nome dos jogadores 1 e 2</Text>
+      <Text style={styles.text}>Nome: {player1}</Text>
+      <TextInput style={styles.input} placeholderTextColor = "white" placeholder="Player 1" onChangeText={setPlayer1} />
+      <Text style={styles.text}>Nome: {player2}</Text>
+      <TextInput style={styles.input} placeholderTextColor = "white" placeholder="Player 2" onChangeText={setPlayer2} />
+      <Button title='Me aperte' onPress={handClick}/>
+      <StatusBar style="auto" />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '09f',
-        alignItems: 'center',
-        justifyContent: 'center',
+  container: {
+    width:'100%',
+    flex: 1,
+    gap: 20,
+    backgroundColor: '#44f',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 
-    },
+  text: {
+    color: 'white',
+    fontSize: 20,
+  },
+
+  input: {
+    width: "80%",
+    height: 40,
+    color: "#fff",
+    borderWidth: 1.5,
+    borderRadius: 10,
+    borderColor: 'white',
+    padding: 10
+  },
+
+  title: {
+    color: "white",
+    fontSize: 31,
+    textAlign: "center",
+    width: "85%",
+    margin: "auto",
+  },
+
 });

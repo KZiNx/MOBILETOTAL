@@ -1,34 +1,30 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Home from './src/Home';
+import Home from './src/Home'
+import Jogo from './src/Jogo'
+
 
 export default function App() {
-  const {screen, setScreen} = useState("home");
-  const {jogador1, setJogador1} = useState("");
-  const {jogador2, setJogador2} = useState("");
 
-  const checkScreen = (checkScreen) => checkScreen === screen;
+const [scream, setScream] = useState("jogo");
+const [player1, setPlayer1] = useState("");
+const [player2, setPlayer2] = useState("");
 
-  const setJogadores = (nome1, nome2) => {
-    setJogador1(nome1);
-    setJogador2(nome2);
+const checkScream = (checkScream) => checkScream === scream;
 
-  }
+const setJogadores = (nome1, nome2) =>{
+  setPlayer1(nome1);
+  setPlayer2(nome2);  
+}
 
-  const changeScreen = (newScreen) => setScreen(newScreen);
+const changeScream = (newScream) => setScream(newScream);
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      {checkScreen("home") && (
-      <Home 
-      mudarNomeJogador={setJogadores}
-      changeScreen={changeScreen}
-      />
-      )}
-    
-    {checkScreen("jogo") && (<Jogo />)}
+      {checkScream('home') && <Home mudarNomeJogadores={setJogadores} changeScream={changeScream} />}
+      {checkScream('jogo') && <Jogo changeScream={changeScream} />}
     </View>
   );
 }
@@ -36,9 +32,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#44f',
     alignItems: 'center',
     justifyContent: 'center',
-
   },
 });
