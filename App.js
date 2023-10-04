@@ -41,7 +41,7 @@ export default function App() {
           onPress={() => changeScreen("jogo_forca")}
         />
       )}
-      
+
 
       {screen === "Jogo_memoria" && <JogoMemoria changeScreen={changeScreen} />}
       {screen === "home" && (
@@ -57,12 +57,12 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 190,
-
-    backgroundColor: "#12f",
+    padding: 300,
+    gap: 10,
+    backgroundColor: "#E0FFFF",
     display: "flex",
     alignItems: "center",
-    flexDirection: "column-reverse",
+    flexDirection: "column",
     justifyContent: "center",
   },
 });

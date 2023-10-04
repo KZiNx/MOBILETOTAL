@@ -1,54 +1,55 @@
 import React, { useState } from "react";
 import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
 
-const startValues = [
+const valoresIniciais = [
   ["", "", ""],
   ["", "", ""],
   ["", "", ""],
 ];
 
-export default function JogoVelha({ changeScreen, player1, player2 }) {
-  const [states, setStates] = useState(startValues);
-  const [player, setPlayer] = useState("X");
+export default function JogoDaVelha({ changeScreen, jogador1, jogador2 }) {
+  const [states, setstates] = useState(valoresIniciais);
+  const [jogador, setJogador] = useState("X");
 
-  const goBack = () => {
+  const Voltar = () => {
     changeScreen("home");
   };
 
-  const checkPlayerWin = (player) => {
-    // check lines
+
+  const verificarVitoriaDoJogador = (jogador) => {
+    // Verificar linhas
     for (let i = 0; i < 3; i++) {
       if (
-        states[i][0] === player &&
-        states[i][1] === player &&
-        states[i][2] === player
+        states[i][0] === jogador &&
+        states[i][1] === jogador &&
+        states[i][2] === jogador
       ) {
         return true;
       }
     }
-    // check columns
+    // Verificar colunas
     for (let i = 0; i < 3; i++) {
       if (
-        states[0][i] === player &&
-        states[1][i] === player &&
-        states[2][i] === player
+        states[0][i] === jogador &&
+        states[1][i] === jogador &&
+        states[2][i] === jogador
       ) {
         return true;
       }
     }
 
-    // check diagonals
+    // Verificar diagonais
     if (
-      states[0][0] === player &&
-      states[1][1] === player &&
-      states[2][2] === player
+      states[0][0] === jogador &&
+      states[1][1] === jogador &&
+      states[2][2] === jogador
     ) {
       return true;
     }
     if (
-      states[0][2] === player &&
-      states[1][1] === player &&
-      states[2][0] === player
+      states[0][2] === jogador &&
+      states[1][1] === jogador &&
+      states[2][0] === jogador
     ) {
       return true;
     }
@@ -56,98 +57,97 @@ export default function JogoVelha({ changeScreen, player1, player2 }) {
     return false;
   };
 
-  const endPlay = (message) => {
-    alert(message);
-    setStates(startValues);
-    goBack();
+  const encerrarJogo = (mensagem) => {
+    alert(mensagem);
+    setstates(valoresIniciais);
+    Voltar();
   };
 
-  const checkDraw = () => {
-    let countStates = 0;
+  const verificarEmpate = () => {
+    let countstates = 0;
 
-    states.forEach((line) => {
-      line.forEach((column) => {
-        if (column === "X" || column === "O") countStates++;
+    states.forEach((linha) => {
+      linha.forEach((coluna) => {
+        if (coluna === "X" || coluna === "O") countstates++;
       });
     });
 
-    return countStates === 9;
+    return countstates === 9;
   };
 
-  const checkWin = () => {
-    if (checkPlayerWin("X")) {
-      endPlay(`O jogador ${player1} venceu!`);
-    } else if (checkPlayerWin("O")) {
-      endPlay(`O jogador ${player2} venceu!`);
-    } else if (checkDraw()) {
-      endPlay("Ninguém venceu!");
+  const verificarVitoria = () => {
+    if (verificarVitoriaDoJogador("X")) {
+      encerrarJogo(`O jogador ${jogador1} venceu!`);
+    } else if (verificarVitoriaDoJogador("O")) {
+      encerrarJogo(`O jogador ${jogador2} venceu!`);
+    } else if (verificarEmpate()) {
+      encerrarJogo("Ninguém venceu!");
     }
   };
 
-  const handleClickPosition = (line, column) => {
-    if (states[line][column] !== "") {
+  const Click = (linha, coluna) => {
+    if (states[linha][coluna] !== "") {
       return;
     }
 
-    const newState = [...states];
-    newState[line][column] = player;
-    setStates([...newState]);
-    setPlayer(player === "X" ? "O" : "X");
-    checkWin();
+    const novoEstado = [...states];
+    novoEstado[linha][coluna] = jogador;
+    setstates([...novoEstado]);
+    setJogador(jogador === "X" ? "O" : "X");
+    verificarVitoria();
   };
 
-  const getPlayerName = () => (player === "X" ? player1 : player2);
+  const getNomeJogador = () => (jogador === "X" ? jogador1 : jogador2);
 
   return (
     <View style={styles.container}>
-      <Button title="Voltar" onPress={goBack} />
-
       <Text>
-        É a vez do jogador: {getPlayerName()} - {player}
+        É a vez do jogador: {getNomeJogador()} - {jogador}
       </Text>
 
-      {states.map((line, indexLine) => {
+      {states.map((linha, indexLinha) => {
         return (
-          <View style={styles.line} key={indexLine}>
-            {line.map((column, indexColumn) => (
+          <View style={styles.linha} key={indexLinha}>
+            {linha.map((coluna, indexColuna) => (
               <TouchableOpacity
-                key={indexColumn}
-                onPress={() => handleClickPosition(indexLine, indexColumn)}
+                key={indexColuna}
+                onPress={() => Click(indexLinha, indexColuna)}
               >
-                <View style={styles.buttonGame}>
-                  <Text style={styles.buttonGameFont}>{column}</Text>
+                <View style={styles.botaoJogo}>
+                  <Text style={styles.textoBotaoJogo}>{coluna}</Text>
                 </View>
               </TouchableOpacity>
             ))}
           </View>
         );
       })}
+      <Button title="Voltar" onPress={Voltar} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  line: {
+  linha: {
     flexDirection: "row",
   },
-  buttonGame: {
-    backgroundColor: "#fff",
+  botaoJogo: {
+    backgroundColor: "#191970",
     width: 90,
     height: 90,
     margin: 5,
     justifyContent: "center",
     alignItems: "center",
   },
-  buttonGameFont: {
+  textoBotaoJogo: {
     fontSize: 50,
-    color: "#11f",
+    color: "#B0E0E6",
   },
   container: {
     flex: 1,
     padding: 20,
     marginTop: 200,
     marginBottom: 200,
-    backgroundColor: "#55f",
+    backgroundColor: "#B0E0E6",
     alignItems: "center",
     justifyContent: "center",
   },

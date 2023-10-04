@@ -1,122 +1,146 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 
-const palavras = ["casa", "carro", "computador", "celular", "caneta", "livro","macaco"];
+const palavras = ["casa", "carro", "computador", "mesa", "livro", "telefone", "janela", "caneta", "cadeira", "cachorro", "gato", "bicicleta", "relogio", "oculos", "lampada", "flores", "maca", "banana", "guitarra", "piano", "sapato", "chave", "cadeado", "sol", "lua", "estrela", "aviao", "navio", "papel", "dinheiro", "chocolate", "morango", "bola", "amigo", "familia", "montanha", "rio", "oceano", "terra", "fogo", "vento", "arco-iris", "arco", "flecha", "espada", "coracao", "riso"]
 
-const Forca = ({ changeScreen }) => {
-  const [SelecionarPalavra, setSelecionarPalavra] = useState("");
+const JogoDaForca = ({ changeScreen }) => {
+  const [PalavraSelecionada, setPalavraSelecionada] = useState("");
   const [Chute, setChute] = useState("");
-  const [Tentativas, setTentativas] = useState(6);
-  const [ColocarLetra, setColocarLetra] = useState("");
-  const [ColocarPalavra, setColocarPalavra] = useState("");
+  const [TentativasRestantes, setTentativasRestantes] = useState(6);
+  const [LetraSelecionada, setLetraSelecionada] = useState("");
+  const [PalavraChutada, setPalavraChutada] = useState("");
   const [LetrasUsadas, setLetrasUsadas] = useState([]);
+  const [ParteDoCorpo, setParteDoCorpo] = useState(0);
 
   useEffect(() => {
-    // Select a random word from the palavras
-    const randomIndex = Math.floor(Math.random() * palavras.length);
-    setSelecionarPalavra(palavras[randomIndex].toUpperCase());
+    // Seleciona uma palavra aleatória das palavras
+    const indiceAleatorio = Math.floor(Math.random() * palavras.length);
+    setPalavraSelecionada(palavras[indiceAleatorio].toUpperCase());
   }, []);
 
-  const handleletraInput = (text) => {
-    setColocarLetra(text.toUpperCase());
+  const Voltar = () => {
+    changeScreen("home");
   };
 
-  const handleWordInput = (text) => {
-    setColocarPalavra(text.toUpperCase());
+  const handleLetraInput = (text) => {
+    setLetraSelecionada(text.toUpperCase());
   };
 
-  const handleGuessletra = () => {
-    if (ColocarLetra && SelecionarPalavra) {
-      const letra = ColocarLetra[0];
+  const handlePalavraInput = (text) => {
+    setPalavraChutada(text.toUpperCase());
+  };
+
+  const handleChuteLetra = () => {
+    if (LetraSelecionada && PalavraSelecionada) {
+      const letra = LetraSelecionada[0];
 
       if (LetrasUsadas.includes(letra)) {
-        // letra already used, do nothing
+        // Letra já utilizada, não faz nada
         return;
       }
 
-      const wordArray = SelecionarPalavra.split("");
-      let newChute = "";
+      const arrayPalavra = PalavraSelecionada.split("");
+      let novoChute = "";
 
-      for (const char of wordArray) {
-        if (char === letra) {
-          newChute += char;
-        } else if (Chute.includes(char)) {
-          newChute += char;
+      let letraCorreta = false;
+
+      for (const caractere of arrayPalavra) {
+        if (caractere === letra) {
+          novoChute += caractere;
+          letraCorreta = true;
+        } else if (Chute.includes(caractere)) {
+          novoChute += caractere;
         } else {
-          newChute += "_";
+          novoChute += "_";
         }
       }
 
-      setChute(newChute);
+      setChute(novoChute);
       setLetrasUsadas([...LetrasUsadas, letra]);
 
-      if (!SelecionarPalavra.includes(letra)) {
-        setTentativas(Tentativas - 1);
+      if (!letraCorreta) {
+        setParteDoCorpo(ParteDoCorpo + 1);
       }
 
-      if (newChute === SelecionarPalavra) {
-        alert("Você venceu! A palavra é: " + SelecionarPalavra);
-        changeScreen("home");
-      } else if (Tentativas === 0) {
-        alert("Você perdeu! A palavra era: " + SelecionarPalavra);
-        changeScreen("home");
+      if (!PalavraSelecionada.includes(letra)) {
+        setTentativasRestantes(TentativasRestantes - 1);
+      }
+
+      if (novoChute === PalavraSelecionada) {
+        alert("Você venceu! A palavra é: " + PalavraSelecionada);
+        changescreen("home");
+      } else if (TentativasRestantes === 0) {
+        alert("Você perdeu! A palavra era: " + PalavraSelecionada);
+        changescreen("home");
       }
     }
 
-    setColocarLetra("");
+    setLetraSelecionada("");
   };
 
-  const handleGuessWord = () => {
-    if (ColocarPalavra && SelecionarPalavra) {
-      if (ColocarPalavra === SelecionarPalavra) {
-        alert("Você venceu! A palavra é: " + SelecionarPalavra);
-        changeScreen("home");
+  const handleChutePalavra = () => {
+    if (PalavraChutada && PalavraSelecionada) {
+      if (PalavraChutada === PalavraSelecionada) {
+        alert("Você venceu! A palavra é: " + PalavraSelecionada);
+        changescreen("home");
       } else {
         alert("Palavra incorreta! Tente novamente.");
-        setColocarPalavra("");
+        setPalavraChutada("");
       }
     }
   };
 
   const renderForca = () => {
-    const ForcaParts = ["   0   ", "   |   ", "  /|\\  ", "   |   ","   |   ","  / \\  "];
+    const partesDaForca = [
+      " ",
+      "  +-----+\n  |           |\n              |\n              |\n              |\n              |\n===========",
+      "  +-----+\n  |           |\n  O         |\n              |\n              |\n              |\n===========",
+      "  +-----+\n  |           |\n  O         |\n  |           |\n              |\n              |\n===========",
+      "  +-----+\n  |           |\n  O         |\n  /|          |\n              |\n              |\n===========",
+      "  +-----+\n  |           |\n  O         |\n  /|\\        |\n              |\n              |\n===========",
+      "  +-----+\n  |           |\n  O         |\n  /|\\        |\n  /           |\n              |\n===========",
+      "  +-----+\n  |           |\n  O         |\n  /|\\        |\n  / \\        |\n              |\n===========",
+    ];
 
-    return ForcaParts.slice(0, 6 - Tentativas).map((part, index) => (
-      <Text key={index} style={styles.ForcaPart}>
-        {part}
+    return (
+      <Text style={styles.forcaParte}>
+        {partesDaForca[ParteDoCorpo]}
       </Text>
-    ));
+    );
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Jogo da Forca</Text>
-      <View style={styles.wordContainer}>
-        <Text style={styles.word}>{Chute}</Text>
+      <Text style={styles.titulo}>Jogo da Forca</Text>
+      <View style={styles.containerPalavra}>
+        <Text style={styles.palavra}>{Chute}</Text>
       </View>
-      <View style={styles.ForcaContainer}>{renderForca()}</View>
-      <View style={styles.inputContainer}>
+      <View style={styles.containerForca}>{renderForca()}</View>
+      <View style={styles.containerEntrada}>
         <TextInput
-          style={styles.input}
+          style={styles.entrada}
           placeholder="Digite uma letra"
-          onChangeText={handleletraInput}
-          value={ColocarLetra}
+          onChangeText={handleLetraInput}
+          value={LetraSelecionada}
           maxLength={1}
         />
-        <Button title="Adivinhar Letra" onPress={handleGuessletra} />
+        <Button title="Adivinhar Letra" onPress={handleChuteLetra} />
       </View>
-      <View style={styles.inputContainer}>
+      <View style={styles.containerEntrada}>
         <TextInput
-          style={styles.input}
+          style={styles.entrada}
           placeholder="Digite a palavra"
-          onChangeText={handleWordInput}
-          value={ColocarPalavra}
+          onChangeText={handlePalavraInput}
+          value={PalavraChutada}
         />
-        <Button title="Adivinhar Palavra" onPress={handleGuessWord} />
+        <Button title="Adivinhar Palavra" onPress={handleChutePalavra} />
       </View>
-      <Text style={styles.LetrasUsadas}>
+      <Text style={styles.letrasUsadas}>
         Letras usadas: {LetrasUsadas.join(", ")}
       </Text>
+      <View style={styles.containerVoltar}>
+      <Button title="Voltar" onPress={Voltar} />
+      </View>
     </View>
   );
 };
@@ -126,42 +150,51 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "#B0E0E6",
+    color: "white",
+    padding: 20,
   },
-  title: {
+  titulo: {
     fontSize: 24,
     marginBottom: 20,
   },
-  wordContainer: {
+  containerPalavra: {
     flexDirection: "row",
     marginBottom: 20,
   },
-  word: {
+  palavra: {
     fontSize: 36,
     fontWeight: "bold",
-    letraSpacing: 10,
+    letterSpacing: 10,
   },
-  ForcaContainer: {
+  containerForca: {
     flexDirection: "column",
     marginBottom: 20,
   },
-  ForcaPart: {
+  forcaParte: {
     fontSize: 24,
   },
-  inputContainer: {
+  containerEntrada: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 20,
   },
-  input: {
+  entrada: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#E0FFFF",
     padding: 10,
     width: 150,
     marginRight: 10,
   },
-  LetrasUsadas: {
+  letrasUsadas: {
     fontSize: 18,
+  },
+  containerVoltar: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
   },
 });
 
-export default Forca;
+export default JogoDaForca;

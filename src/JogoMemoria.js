@@ -1,144 +1,144 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
-const cards = [
-  { id: 1, value: "🥶" },
-  { id: 2, value: "😝" },
-  { id: 3, value: "😍" },
-  { id: 4, value: "😃" },
-  { id: 5, value: "🥶" },
-  { id: 6, value: "😝" },
-  { id: 7, value: "😍" },
-  { id: 8, value: "😃" },
-  { id: 9, value: "🥵" },
-  { id: 10, value: "😑" },
-  { id: 11, value: "😑" },
-  { id: 12, value: "😡" },
-  { id: 13, value: "😡" },
-  { id: 14, value: "🤢" },
-  { id: 15, value: "🤢" },
-  { id: 16, value: "🤡" },
-  { id: 17, value: "🤡" },
-  { id: 18, value: "👻" },
-  { id: 19, value: "👻" },
-  { id: 20, value: "☠️" },
-  { id: 21, value: "☠️" },
-  { id: 22, value: "👽" },
-  { id: 23, value: "👽" },
-  { id: 24, value: "🥵" },
-  { id: 25, value: "🤯" },
-  { id: 26, value: "🤯" },
-  { id: 27, value: "🙄" },
-  { id: 28, value: "🙄" },
-  { id: 29, value: "😎" },
-  { id: 30, value: "😎" },
-  { id: 31, value: "🤓" },
-  { id: 32, value: "🤓" },
-  { id: 33, value: "🤟" },
-  { id: 34, value: "🤟" },
-  { id: 35, value: "👍" },
-  { id: 36, value: "👍" },
-  { id: 37, value: "🙃" },
-  { id: 38, value: "🙃" },
-  { id: 39, value: "🤩" },
-  { id: 40, value: "🤩" },
-  { id: 41, value: "🤪" },
-  { id: 42, value: "🤪" },
-  { id: 43, value: "🤬" },
-  { id: 44, value: "🤬" },
-  { id: 45, value: "🤮" },
-  { id: 46, value: "🤮" },
-  { id: 47, value: "🤥" },
-  { id: 48, value: "🤥" },
-  { id: 49, value: "🤫" },
-  { id: 50, value: "🤫" },
+const cartas = [
+  { id: 1, valor: "🥶" },
+  { id: 2, valor: "🥶" },
+  { id: 3, valor: "😃" },
+  { id: 4, valor: "😃" },
+  { id: 5, valor: "😝" },
+  { id: 6, valor: "😝" },
+  { id: 7, valor: "😍" },
+  { id: 8, valor: "😍" },
+  { id: 9, valor: "🥵" },
+  { id: 10, valor: "🥵" },
+  { id: 11, valor: "😑" },
+  { id: 12, valor: "😑" },
+  { id: 13, valor: "😡" },
+  { id: 14, valor: "😡" },
+  { id: 15, valor: "🤢" },
+  { id: 16, valor: "🤢" },
+  { id: 17, valor: "🤡" },
+  { id: 18, valor: "🤡" },
+  { id: 19, valor: "👻" },
+  { id: 20, valor: "👻" },
+  { id: 21, valor: "☠️" },
+  { id: 22, valor: "☠️" },
+  { id: 23, valor: "👽" },
+  { id: 24, valor: "👽" },
+  { id: 25, valor: "🤯" },
+  { id: 26, valor: "🤯" },
+  { id: 27, valor: "🙄" },
+  { id: 28, valor: "🙄" },
+  { id: 29, valor: "😎" },
+  { id: 30, valor: "😎" },
+  { id: 31, valor: "🤓" },
+  { id: 32, valor: "🤓" },
+  { id: 33, valor: "🤟" },
+  { id: 34, valor: "🤟" },
+  { id: 35, valor: "👍" },
+  { id: 36, valor: "👍" },
+  { id: 37, valor: "🙃" },
+  { id: 38, valor: "🙃" },
+  { id: 39, valor: "🤩" },
+  { id: 40, valor: "🤩" },
+  { id: 41, valor: "🤪" },
+  { id: 42, valor: "🤪" },
+  { id: 43, valor: "🤬" },
+  { id: 44, valor: "🤬" },
+  { id: 45, valor: "🤮" },
+  { id: 46, valor: "🤮" },
+  { id: 47, valor: "🤥" },
+  { id: 48, valor: "🤥" },
+  { id: 49, valor: "🤫" },
+  { id: 50, valor: "🤫" }
 ];
 
-const shuffleArray = (array) => {
-  const shuffledArray = [...array];
-  for (let i = shuffledArray.length - 1; i > 0; i--) {
+const embaralharArray = (array) => {
+  const arrayEmbaralhado = [...array];
+  for (let i = arrayEmbaralhado.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+    [arrayEmbaralhado[i], arrayEmbaralhado[j]] = [arrayEmbaralhado[j], arrayEmbaralhado[i]];
   }
-  return shuffledArray;
+  return arrayEmbaralhado;
 };
 
-const JogoMemoria = ({ changeScreen }) => {
-  const [board, setBoard] = useState([]);
-  const [flippedIndexes, setFlippedIndexes] = useState([]);
-  const [matches, setMatches] = useState([]);
+const JogoMemoria = ({ mudarTela }) => {
+  const [tabuleiro, setTabuleiro] = useState([]);
+  const [indicesVirados, setIndicesVirados] = useState([]);
+  const [paresEncontrados, setParesEncontrados] = useState([]);
 
   useEffect(() => {
-    initializeBoard();
+    iniciarTabuleiro();
   }, []);
 
-  const initializeBoard = () => {
-    const shuffledCards = shuffleArray(cards);
-    setBoard(shuffledCards);
-    setFlippedIndexes([]);
-    setMatches([]);
+  const iniciarTabuleiro = () => {
+    const cartasEmbaralhadas = embaralharArray(cartas);
+    setTabuleiro(cartasEmbaralhadas);
+    setIndicesVirados([]);
+    setParesEncontrados([]);
   };
 
-  const handleCardPress = (index) => {
-    if (flippedIndexes.length === 2 || flippedIndexes.includes(index)) {
+  const lidarComPressaoCarta = (indice) => {
+    if (indicesVirados.length === 2 || indicesVirados.includes(indice)) {
       return;
     }
 
-    const newFlippedIndexes = [...flippedIndexes, index];
-    setFlippedIndexes(newFlippedIndexes);
+    const novosIndicesVirados = [...indicesVirados, indice];
+    setIndicesVirados(novosIndicesVirados);
 
-    if (newFlippedIndexes.length === 2) {
-      const [firstIndex, secondIndex] = newFlippedIndexes;
-      if (board[firstIndex].value === board[secondIndex].value) {
+    if (novosIndicesVirados.length === 2) {
+      const [primeiroIndice, segundoIndice] = novosIndicesVirados;
+      if (tabuleiro[primeiroIndice].valor === tabuleiro[segundoIndice].valor) {
         setTimeout(() => {
-          setMatches([...matches, board[firstIndex].id, board[secondIndex].id]);
-          setFlippedIndexes([]);
+          setParesEncontrados([...paresEncontrados, tabuleiro[primeiroIndice].id, tabuleiro[segundoIndice].id]);
+          setIndicesVirados([]);
         }, 1000);
       } else {
         setTimeout(() => {
-          setFlippedIndexes([]);
+          setIndicesVirados([]);
         }, 1000);
       }
     }
   };
 
-  const renderCard = (card, index) => {
-    const isFlipped =
-      flippedIndexes.includes(index) || matches.includes(card.id);
-    const cardStyle = isFlipped ? styles.cardFlipped : styles.card;
+  const renderizarCarta = (carta, indice) => {
+    const estaVirada =
+      indicesVirados.includes(indice) || paresEncontrados.includes(carta.id);
+    const estiloCarta = estaVirada ? styles.cartaVirada : styles.carta;
 
     return (
       <TouchableOpacity
-        key={index}
-        style={cardStyle}
-        onPress={() => handleCardPress(index)}
-        disabled={isFlipped || flippedIndexes.length === 2}
+        key={indice}
+        style={estiloCarta}
+        onPress={() => lidarComPressaoCarta(indice)}
+        disabled={estaVirada || indicesVirados.length === 2}
       >
-        {isFlipped && <Text style={styles.cardText}>{card.value}</Text>}
+        {estaVirada && <Text style={styles.textoCarta}>{carta.valor}</Text>}
       </TouchableOpacity>
     );
   };
 
-  const renderBoard = () => {
+  const renderizarTabuleiro = () => {
     return (
-      <View style={styles.board}>
-        {board.map((card, index) => renderCard(card, index))}
+      <View style={styles.tabuleiro}>
+        {tabuleiro.map((carta, indice) => renderizarCarta(carta, indice))}
       </View>
     );
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Jogo da Memória</Text>
-      {renderBoard()}
-      <TouchableOpacity style={styles.button} onPress={initializeBoard}>
-        <Text style={styles.buttonText}>Reiniciar Jogo</Text>
+      <Text style={styles.titulo}>Jogo da Memória</Text>
+      {renderizarTabuleiro()}
+      <TouchableOpacity style={styles.botao} onPress={iniciarTabuleiro}>
+        <Text style={styles.textoBotao}>Reiniciar Jogo</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.button}
-        onPress={() => changeScreen("home")}
+        style={styles.botao}
+        onPress={() => mudarTela("home")}
       >
-        <Text style={styles.buttonText}>Voltar</Text>
+        <Text style={styles.textoBotao}>Voltar</Text>
       </TouchableOpacity>
     </View>
   );
@@ -147,45 +147,48 @@ const JogoMemoria = ({ changeScreen }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#11f",
+    backgroundColor: "#00CED1",
     alignItems: "center",
     justifyContent: "center",
     fontSize: 24,
     marginBottom: 20,
   },
-  board: {
+  tabuleiro: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
   },
-  card: {
+  carta: {
     width: 80,
     height: 80,
-    backgroundColor: "lightgray",
+    backgroundColor: "black",
     margin: 10,
     alignItems: "center",
     justifyContent: "center",
   },
-  cardFlipped: {
+  cartaVirada: {
     width: 80,
     height: 80,
-    backgroundColor: "lightblue",
+    backgroundColor: "#7FFF00",
     margin: 10,
     alignItems: "center",
     justifyContent: "center",
   },
-  cardText: {
-    fontSize: 24,
+  textoCarta: {
+    fontSize: 30,
   },
-  button: {
+  botao: {
     marginTop: 20,
     padding: 10,
     backgroundColor: "blue",
     borderRadius: 5,
   },
-  buttonText: {
+  textoBotao: {
     fontSize: 18,
     color: "white",
+  },
+  titulo: {
+    fontSize: 24,
   },
 });
 
