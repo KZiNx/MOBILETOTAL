@@ -48,10 +48,10 @@ const cartas = [
   { id: 44, valor: "🤬" },
   { id: 45, valor: "🤮" },
   { id: 46, valor: "🤮" },
-  { id: 47, valor: "🤥" },
-  { id: 48, valor: "🤥" },
-  { id: 49, valor: "🤫" },
-  { id: 50, valor: "🤫" }
+  { id: 47, valor: "( ͡❛ ͜ʖ ͡❛)" },
+  { id: 48, valor: "( ͡❛ ͜ʖ ͡❛)" },
+  { id: 49, valor: "💩" },
+  { id: 50, valor: "💩" }
 ];
 
 const embaralharArray = (array) => {
