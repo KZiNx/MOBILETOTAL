@@ -151,6 +151,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     fontSize: 24,
     marginBottom: 20,
+    gap:10,
+    paddingBottom:15,
+    borderRadius:15,
   },
   tabuleiro: {
     flexDirection: "row",
@@ -179,12 +182,15 @@ const styles = StyleSheet.create({
   botao: {
     marginTop: 20,
     padding: 10,
-    backgroundColor: "#0000FF",
+    backgroundColor: "#2196f3",
     borderRadius: 5,
+    gap:10,
   },
   textoBotao: {
     fontSize: 18,
     color: "white",
+    backgroundColor: "#2196f3",
+  
   },
   titulo: {
     fontSize: 24,

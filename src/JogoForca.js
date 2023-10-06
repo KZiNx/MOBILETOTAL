@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 
-const palavras = ["casa", "carro", "computador", "mesa", "livro", "telefone", "janela", "caneta", "cadeira", "cachorro", "gato", "bicicleta", "relogio", "oculos", "lampada", "flores", "maca", "banana", "guitarra", "piano", "sapato", "chave", "cadeado", "sol", "lua", "estrela", "aviao", "navio", "papel", "dinheiro", "chocolate", "morango", "bola", "amigo", "familia", "montanha", "rio", "oceano", "terra", "fogo", "vento", "arco-iris", "arco", "flecha", "espada", "coracao", "riso"]
+const palavras = ["programacao", "algoritmo", "linguagem", "desenvolvimento", "codigo", "software", "hardware", "rede", "internet", "servidor", "banco de dados", "seguranca", "programador", "debugger", "API", "interface", "sistema", "atualizacao", "dispositivo", "codigo-fonte", "depuracao", "automacao", "inovacao", "computador", "teclado", "mouse", "placa-mae", "armazenamento", "arquitetura", "nuvem", "analise", "virtualizacao", "backup", "criptografia", "autenticacao", "firewall", "proxy", "data center", "cliente", "servico", "processamento", "conectividade", "concorrencia", "requisito", "biblioteca", "framework", "engenharia", "gerenciamento"]
 
 const JogoDaForca = ({ changeScreen }) => {
   const [PalavraSelecionada, setPalavraSelecionada] = useState("");
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#B0E0E6",
+    backgroundColor: "#00CED1",
     color: "white",
     padding: 20,
   },
