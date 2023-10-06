@@ -13,7 +13,7 @@ const JogoDaForca = ({ changeScreen }) => {
   const [ParteDoCorpo, setParteDoCorpo] = useState(0);
 
   useEffect(() => {
-    // Seleciona uma palavra aleatória das palavras
+    
     const indiceAleatorio = Math.floor(Math.random() * palavras.length);
     setPalavraSelecionada(palavras[indiceAleatorio].toUpperCase());
   }, []);
@@ -35,7 +35,7 @@ const JogoDaForca = ({ changeScreen }) => {
       const letra = LetraSelecionada[0];
 
       if (LetrasUsadas.includes(letra)) {
-        // Letra já utilizada, não faz nada
+      
         return;
       }
 

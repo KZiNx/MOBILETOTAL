@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Button } from "react-native";
 
 const cartas = [
   { id: 1, valor: "🥶" },
@@ -63,7 +63,7 @@ const embaralharArray = (array) => {
   return arrayEmbaralhado;
 };
 
-const JogoMemoria = ({ mudarTela }) => {
+const JogoMemoria = ({ changeScreen }) => {
   const [tabuleiro, setTabuleiro] = useState([]);
   const [indicesVirados, setIndicesVirados] = useState([]);
   const [paresEncontrados, setParesEncontrados] = useState([]);
@@ -127,6 +127,10 @@ const JogoMemoria = ({ mudarTela }) => {
     );
   };
 
+  const Voltar = () => {
+    changeScreen("home");
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>Jogo da Memória</Text>
@@ -134,12 +138,7 @@ const JogoMemoria = ({ mudarTela }) => {
       <TouchableOpacity style={styles.botao} onPress={iniciarTabuleiro}>
         <Text style={styles.textoBotao}>Reiniciar Jogo</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.botao}
-        onPress={() => mudarTela("home")}
-      >
-        <Text style={styles.textoBotao}>Voltar</Text>
-      </TouchableOpacity>
+      <Button title="Voltar" onPress={Voltar} />
     </View>
   );
 };
@@ -180,7 +179,7 @@ const styles = StyleSheet.create({
   botao: {
     marginTop: 20,
     padding: 10,
-    backgroundColor: "blue",
+    backgroundColor: "#0000FF",
     borderRadius: 5,
   },
   textoBotao: {
