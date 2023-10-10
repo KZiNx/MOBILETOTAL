@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
 
+// Matriz para representar os valores iniciais do jogo da velha.
 const valoresIniciais = [
   ["", "", ""],
   ["", "", ""],
@@ -8,14 +9,15 @@ const valoresIniciais = [
 ];
 
 export default function JogoDaVelha({ changeScreen, jogador1, jogador2 }) {
-  const [states, setstates] = useState(valoresIniciais);
+  const [states, setStates] = useState(valoresIniciais);
   const [jogador, setJogador] = useState("X");
 
+  // Função para voltar à tela inicial.
   const Voltar = () => {
     changeScreen("home");
   };
 
-
+  // Função para verificar se um jogador venceu com base na matriz de jogo.
   const verificarVitoriaDoJogador = (jogador) => {
     // Verificar linhas
     for (let i = 0; i < 3; i++) {
@@ -57,24 +59,27 @@ export default function JogoDaVelha({ changeScreen, jogador1, jogador2 }) {
     return false;
   };
 
+  // Função para encerrar o jogo com uma mensagem.
   const encerrarJogo = (mensagem) => {
     alert(mensagem);
-    setstates(valoresIniciais);
+    setStates(valoresIniciais);
     Voltar();
   };
 
+  // Função para verificar se o jogo empatou (todos os espaços preenchidos).
   const verificarEmpate = () => {
-    let countstates = 0;
+    let countStates = 0;
 
     states.forEach((linha) => {
       linha.forEach((coluna) => {
-        if (coluna === "X" || coluna === "O") countstates++;
+        if (coluna === "X" || coluna === "O") countStates++;
       });
     });
 
-    return countstates === 9;
+    return countStates === 9;
   };
 
+  // Função para verificar o resultado do jogo (vitória, empate ou continuação).
   const verificarVitoria = () => {
     if (verificarVitoriaDoJogador("X")) {
       encerrarJogo(`O jogador ${jogador1} venceu!`);
@@ -85,18 +90,20 @@ export default function JogoDaVelha({ changeScreen, jogador1, jogador2 }) {
     }
   };
 
+  // Função chamada quando um botão é clicado.
   const Click = (linha, coluna) => {
     if (states[linha][coluna] !== "") {
-      return;
+      return; // A célula já está preenchida.
     }
 
     const novoEstado = [...states];
     novoEstado[linha][coluna] = jogador;
-    setstates([...novoEstado]);
-    setJogador(jogador === "X" ? "O" : "X");
+    setStates(novoEstado);
+    setJogador(jogador === "X" ? "O" : "X"); // Alternar jogadores
     verificarVitoria();
   };
 
+  // Função para obter o nome do jogador atual.
   const getNomeJogador = () => (jogador === "X" ? jogador1 : jogador2);
 
   return (
@@ -105,22 +112,20 @@ export default function JogoDaVelha({ changeScreen, jogador1, jogador2 }) {
         É a vez do jogador: {getNomeJogador()} - {jogador}
       </Text>
 
-      {states.map((linha, indexLinha) => {
-        return (
-          <View style={styles.linha} key={indexLinha}>
-            {linha.map((coluna, indexColuna) => (
-              <TouchableOpacity
-                key={indexColuna}
-                onPress={() => Click(indexLinha, indexColuna)}
-              >
-                <View style={styles.botaoJogo}>
-                  <Text style={styles.textoBotaoJogo}>{coluna}</Text>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </View>
-        );
-      })}
+      {states.map((linha, indexLinha) => (
+        <View style={styles.linha} key={indexLinha}>
+          {linha.map((coluna, indexColuna) => (
+            <TouchableOpacity
+              key={indexColuna}
+              onPress={() => Click(indexLinha, indexColuna)}
+            >
+              <View style={styles.botaoJogo}>
+                <Text style={styles.textoBotaoJogo}>{coluna}</Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
+      ))}
       <Button title="Voltar" onPress={Voltar} />
     </View>
   );

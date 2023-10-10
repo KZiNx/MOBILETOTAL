@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Button } from "react-native";
-
+//cartas com seus valores e IDs.
 const cartas = [
   { id: 1, valor: "🥶" },
   { id: 2, valor: "🥶" },
@@ -48,12 +48,12 @@ const cartas = [
   { id: 44, valor: "🤬" },
   { id: 45, valor: "🤮" },
   { id: 46, valor: "🤮" },
-  { id: 47, valor: "( ͡❛ ͜ʖ ͡❛)" },
-  { id: 48, valor: "( ͡❛ ͜ʖ ͡❛)" },
+  { id: 47, valor: "👌" },
+  { id: 48, valor: "👌" },
   { id: 49, valor: "💩" },
   { id: 50, valor: "💩" }
 ];
-
+//embaralhar um array.
 const embaralharArray = (array) => {
   const arrayEmbaralhado = [...array];
   for (let i = arrayEmbaralhado.length - 1; i > 0; i--) {
@@ -63,23 +63,26 @@ const embaralharArray = (array) => {
   return arrayEmbaralhado;
 };
 
+//os estados do componente.
 const JogoMemoria = ({ changeScreen }) => {
   const [tabuleiro, setTabuleiro] = useState([]);
   const [indicesVirados, setIndicesVirados] = useState([]);
   const [paresEncontrados, setParesEncontrados] = useState([]);
 
+  //iniciar o tabuleiro.
   useEffect(() => {
     iniciarTabuleiro();
   }, []);
 
+  //Função para iniciar o tabuleiro do jogo.
   const iniciarTabuleiro = () => {
     const cartasEmbaralhadas = embaralharArray(cartas);
     setTabuleiro(cartasEmbaralhadas);
     setIndicesVirados([]);
     setParesEncontrados([]);
   };
-
-  const lidarComPressaoCarta = (indice) => {
+  //clique na carta
+  const clique = (indice) => {
     if (indicesVirados.length === 2 || indicesVirados.includes(indice)) {
       return;
     }
@@ -101,7 +104,7 @@ const JogoMemoria = ({ changeScreen }) => {
       }
     }
   };
-
+  //rendereizar a carta 
   const renderizarCarta = (carta, indice) => {
     const estaVirada =
       indicesVirados.includes(indice) || paresEncontrados.includes(carta.id);
@@ -111,14 +114,14 @@ const JogoMemoria = ({ changeScreen }) => {
       <TouchableOpacity
         key={indice}
         style={estiloCarta}
-        onPress={() => lidarComPressaoCarta(indice)}
+        onPress={() => clique(indice)}
         disabled={estaVirada || indicesVirados.length === 2}
       >
         {estaVirada && <Text style={styles.textoCarta}>{carta.valor}</Text>}
       </TouchableOpacity>
     );
   };
-
+  //renderizar todo o tabuleiro
   const renderizarTabuleiro = () => {
     return (
       <View style={styles.tabuleiro}>
@@ -126,11 +129,11 @@ const JogoMemoria = ({ changeScreen }) => {
       </View>
     );
   };
-
+  //voltar a tela home
   const Voltar = () => {
     changeScreen("home");
   };
-
+  //renderiza o jogo memoria
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>Jogo da Memória</Text>
@@ -142,7 +145,7 @@ const JogoMemoria = ({ changeScreen }) => {
     </View>
   );
 };
-
+//css
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -151,9 +154,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     fontSize: 24,
     marginBottom: 20,
-    gap:10,
-    paddingBottom:15,
-    borderRadius:15,
+    gap: 10,
+    paddingBottom: 15,
+    borderRadius: 15,
   },
   tabuleiro: {
     flexDirection: "row",
@@ -184,13 +187,13 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#2196f3",
     borderRadius: 5,
-    gap:10,
+    gap: 10,
   },
   textoBotao: {
     fontSize: 18,
     color: "white",
     backgroundColor: "#2196f3",
-  
+
   },
   titulo: {
     fontSize: 24,
