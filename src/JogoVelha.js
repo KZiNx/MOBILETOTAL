@@ -109,7 +109,7 @@ export default function JogoDaVelha({ changeScreen, jogador1, jogador2 }) {
   return (
     <View style={styles.container}>
       <Text>
-        É a vez do jogador: {getNomeJogador()} - {jogador}
+        Vez do: {getNomeJogador()} - Jogando com o:  {jogador}
       </Text>
 
       {states.map((linha, indexLinha) => (
