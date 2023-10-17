@@ -13,7 +13,7 @@ export default function Home({ mudarNomeJogadores, changeScreen }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.texto}>Tela Inicial</Text>
+      <Text style={styles.texto}>Kevin Games</Text>
       <TextInput
         placeholder="Nome do Jogador 1"
         onChangeText={(text) => setJogador1(text)}
